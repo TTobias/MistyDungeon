@@ -6,8 +6,7 @@ public class Level : MonoBehaviour
 {
     [Header("Data")]
     public TileObject[,] map;
-    public GameObject[,] mapObject;
-    public GameObject player;
+    public Player player;
     //public int enemies;
 
     [Header("Generator")]
@@ -19,12 +18,14 @@ public class Level : MonoBehaviour
     public float tileHeight = 1.2f;
     public float tileWidth = 10;
     public GameObject tilePrefab;
+    public GameObject playerPrefab;
 
 
     // Start is called before the first frame update
     void Start()
     {
         generateMap();
+        spawnPlayer();
     }
 
     // Update is called once per frame
@@ -47,20 +48,33 @@ public class Level : MonoBehaviour
                 if(x>(size/4)*3 && x+y>=(size/4)*3*2){ //top right corner
                     map[x,y].isVoid = true;
                 }*/
-            }
-        }
-        //set map Tiles
-        mapObject = new GameObject[size,size];
-        for(int x = 0; x<size; x++){
-            for(int y = 0; y<size; y++){
-                mapObject[x,y] = Instantiate<GameObject>(tilePrefab);
-                mapObject[x,y].transform.position = new Vector2(x*tileWidth + tileWidth/2, y*tileHeight + x*0.5f*tileHeight + tileHeight/2);
-                //mapObject[x,y].GetComponent<SpriteRenderer>().enabled = !map[x,y].isVoid;
-                mapObject[x,y].GetComponent<SpriteRenderer>().color = map[x,y].isVoid?Color.black:Color.white;
+
+                map[x,y].tile = Instantiate<GameObject>(tilePrefab);
+                map[x,y].tile.transform.position = new Vector2(x*tileWidth + tileWidth/2, y*tileHeight + x*0.5f*tileHeight + tileHeight/2);
+                map[x,y].tile.transform.parent = this.transform;
+                map[x,y].tile.name = "Tile: "+x+" , "+y;
+
+                map[x,y].updateColor();
             }
         }
 
         //set enemies
     }
 
+
+    public void spawnPlayer(){
+        GameObject tmp = Instantiate<GameObject>(playerPrefab); 
+        player = tmp.GetComponent<Player>();
+        player.positionX = (int)Random.Range(size*0.1f,size*0.9f);
+        player.positionY = (int)Random.Range(size*0.1f,size*0.9f);
+        tmp.transform.position = map[player.positionX,player.positionY].tile.transform.position + player.playerOffset;
+    }
+
+    public void updateTiles(){
+        for(int x = 0; x<size; x++){
+            for(int y = 0; y<size; y++){
+                map[x,y].updateColor();
+            }
+        }
+    }
 }
