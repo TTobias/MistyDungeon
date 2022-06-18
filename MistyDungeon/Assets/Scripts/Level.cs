@@ -39,11 +39,12 @@ public class Level : MonoBehaviour
 
 
     void Start(){
-        generateLevel();
+        //generateLevel();
     }
 
     void Update(){
-        selectTile();
+        if(levelLoaded)
+            selectTile();
     }
 
     void FixedUpdate()

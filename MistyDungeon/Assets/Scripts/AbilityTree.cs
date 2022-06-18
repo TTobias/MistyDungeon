@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityTree : MonoBehaviour
+public class AbilityTree
 {
     public bool isUnlocked(string id){
         return false;

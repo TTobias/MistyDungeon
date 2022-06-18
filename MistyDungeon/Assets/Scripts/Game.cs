@@ -15,22 +15,27 @@ public class Game : MonoBehaviour
     public Level level;
     public enum GamePhase { PLAYER1, PLAYER2, ENEMY };
     public GamePhase gamePhase;
+    public GameObject storyOverlay;
+    public GameObject levelupOverlay;
 
     [Header("Technical")]
     public float borderWidth = 0.1f;
 
+    [Header("Upgrade")]
+    public AbilityTree skilltree = new AbilityTree();
+    public Skill[] upgradeOptions;
+
 
     void Start()
     {
-        phase = Phase.CUTSCENE;
-        gamePhase = GamePhase.PLAYER1;
+        startStory();
     }
 
 
     //Disclaimer: Ich bin mir bewusst das dies absolut kein sauberer code ist, aber naja, was sind schon programmierparadigmen :)
     void FixedUpdate()
     {
-        if(!onCooldown){
+        if(!onCooldown && level.levelLoaded){
 
             if(phase == Phase.GAME){
                 if(gamePhase == GamePhase.PLAYER1){
@@ -72,14 +77,14 @@ public class Game : MonoBehaviour
             }else if(phase == Phase.LEVELUP){
                 if(Input.GetButtonDown("Space") || Input.GetMouseButtonDown(0)){ // Ersetzen durch auswahl
                     //Load cutscene
-                    phase = Phase.GAME;
+                    startStory();
                 }
 
             }else if(phase == Phase.CUTSCENE){
                 if(Input.GetButtonDown("Space") || Input.GetMouseButtonDown(0)){ //BUTTONDOWN überprüfen
                     //Depth += 1
                     //Load next Level
-                    phase = Phase.GAME;
+                    startLevel();
                 }
             }
         }
@@ -121,6 +126,7 @@ public class Game : MonoBehaviour
 
 
     public IEnumerator PlayerMove(int n){
+        //make move
         onCooldown = true;
         int steps = 10;
         Vector3 step = level.map[level.xSelect,level.ySelect].tile.transform.position - level.player.transform.position;
@@ -136,10 +142,79 @@ public class Game : MonoBehaviour
         level.updateTiles();
         level.resetCameraPosition(n);
 
+        //do kill
 
-        //DO KILLS
+
 
         onCooldown = false;
+        //Check if Level is finished
+        if(level.player.positionX == level.stairs.posX && level.player.positionY == level.stairs.posY){
+            startLevelup();
+        }
+        gamePhase = GamePhase.PLAYER2;
     }
 
+
+    public void startLevelup(){
+        phase = Phase.LEVELUP;
+
+        storyOverlay.SetActive(false);
+        levelupOverlay.SetActive(true);
+
+        level.clearLevel();
+
+        if(playerAmount == 1){
+
+            upgradeOptions = new Skill[3];
+            List<Skill> opt = skilltree.findOptions(1);
+            for(int i = 0; i<3; i++){
+                Skill s = opt[(int)Random.Range(0, opt.Count-0.1f)];
+                opt.Remove(s);
+                upgradeOptions[i] = s;
+            }
+
+        }else{
+            //COOP
+        }
+    }
+
+    
+    public void startLevel(){
+        phase = Phase.GAME;
+        gamePhase = GamePhase.PLAYER1;
+
+        level.depthLevel += 1;
+        level.generateLevel();
+
+        storyOverlay.SetActive(false);
+        levelupOverlay.SetActive(false);
+
+        if(playerAmount == 1){
+            
+        }else{
+            //COOP
+        }
+    }
+
+    
+    public void startStory(){
+        phase = Phase.CUTSCENE;
+
+        storyOverlay.SetActive(true);
+        levelupOverlay.SetActive(false);
+
+
+    }
+
+
+    public void selectUpgrade(int p, int i){
+        startStory();
+    }
+
+    public void upgrade1P1(){ selectUpgrade(1,0); }
+    public void upgrade2P1(){ selectUpgrade(1,1); }
+    public void upgrade3P1(){ selectUpgrade(1,2); }
+    public void upgrade1P2(){ selectUpgrade(2,0); }
+    public void upgrade2P2(){ selectUpgrade(2,1); }
+    public void upgrade3P2(){ selectUpgrade(2,2); }
 }
