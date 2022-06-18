@@ -61,9 +61,17 @@ public class Level : MonoBehaviour
     }
 
     public void clearLevel(){
+        cam.transform.parent = transform;   
         levelLoaded = false;
-        while(transform.GetChildCount() > 0){
+        while(transform.childCount > 0){
             Destroy(transform.GetChild(0));
+        }
+        map = new TileObject[0,0];
+        Destroy(player.gameObject);
+        while(enemies.Count > 0){
+            Enemy e = enemies[0];
+            enemies.RemoveAt(0);
+            Destroy(e);
         }
     }
 
@@ -102,7 +110,7 @@ public class Level : MonoBehaviour
         player = tmp.GetComponent<Player>();
         player.positionX = (int)Random.Range(size*0.1f,size*0.9f);
         player.positionY = (int)Random.Range(size*0.1f,size*0.9f);
-        tmp.transform.position = map[player.positionX,player.positionY].tile.transform.position + player.playerOffset;
+        fixPlayerPosition();
     }
 
     public void updateTiles(){
@@ -116,6 +124,13 @@ public class Level : MonoBehaviour
     }
 
     public void setCamera(){
+        cameraPosX = player.positionX;
+        cameraPosY = player.positionY;
+        cam.transform.position = map[cameraPosX,cameraPosY].tile.transform.position + CameraOffset;
+        cam.transform.parent = player.transform;
+    }
+
+    public void resetCameraPosition(int n){
         cameraPosX = player.positionX;
         cameraPosY = player.positionY;
         cam.transform.position = map[cameraPosX,cameraPosY].tile.transform.position + CameraOffset;
@@ -154,5 +169,15 @@ public class Level : MonoBehaviour
 
             updateTiles();
         }
+    }
+
+
+    public bool selectionIsValid(){
+        return xSelect >= 0 && ySelect >= 0 && xSelect < size && ySelect < size && map[xSelect,ySelect].isWalkable();
+    }
+
+
+    public void fixPlayerPosition(){
+        player.transform.position = map[player.positionX,player.positionY].tile.transform.position + player.playerOffset;
     }
 }

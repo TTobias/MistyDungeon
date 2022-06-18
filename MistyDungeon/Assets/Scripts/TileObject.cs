@@ -80,4 +80,13 @@ public class TileObject
         }
 
     }
+
+    public int distanceTo(int x, int y){
+        return distance(x, y, posX, posY);
+    }
+
+
+    public bool isWalkable(){
+        return !isVoid;
+    }
 }

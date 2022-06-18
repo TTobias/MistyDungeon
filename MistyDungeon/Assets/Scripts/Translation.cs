@@ -67,4 +67,6 @@ public static class Translation
     //OPTIONS TEXT
 
     //DESCRIPTION TEXT
+
+    //ACHIEVEMENTS
 }
