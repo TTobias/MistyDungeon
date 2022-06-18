@@ -8,6 +8,13 @@ public class Player : MonoBehaviour
     public int positionX;
     public int positionY;
     public int playerNumber = 1;
+
+    [Header("Ability")]
+    public int viewRange = 1;
+    public int extViewRange = 2;
+
+    [Header("Items")]
+    public string slot1 = "Dagger"; //Placeholder
     
     [Header("Reference")]
     public Level level;
