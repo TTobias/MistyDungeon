@@ -22,6 +22,7 @@ public class Level : MonoBehaviour
     public GameObject fogPrefab;
     public GameObject playerPrefab;
     public GameObject skeletonPrefab;
+    public bool levelLoaded = false;
 
     [Header("Camera")]
     public Vector3 CameraOffset = new Vector3(0,0);
@@ -51,11 +52,19 @@ public class Level : MonoBehaviour
 
 
     public void generateLevel(){
+        levelLoaded = true;
         generateMap();
         spawnPlayer();
         setCamera();
         generateEnemies();
         updateTiles();
+    }
+
+    public void clearLevel(){
+        levelLoaded = false;
+        while(transform.GetChildCount() > 0){
+            Destroy(transform.GetChild(0));
+        }
     }
 
 
