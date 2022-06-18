@@ -8,6 +8,7 @@ public class Level : MonoBehaviour
     public TileObject[,] map;
     public Player player;
     public List<Enemy> enemies = new List<Enemy>();
+    public Stairs stairs;
 
     [Header("Generator")]
     public int depthLevel = 1;
@@ -22,6 +23,7 @@ public class Level : MonoBehaviour
     public GameObject fogPrefab;
     public GameObject playerPrefab;
     public GameObject skeletonPrefab;
+    public GameObject stairPrefab;
     public bool levelLoaded = false;
 
     [Header("Camera")]
@@ -56,6 +58,7 @@ public class Level : MonoBehaviour
         generateMap();
         spawnPlayer();
         setCamera();
+        setStairs();
         generateEnemies();
         updateTiles();
     }
@@ -72,35 +75,6 @@ public class Level : MonoBehaviour
             Enemy e = enemies[0];
             enemies.RemoveAt(0);
             Destroy(e);
-        }
-    }
-
-
-    public void generateMap(){
-        //create Map
-        map = new TileObject[size,size];
-        for(int x = 0; x<size; x++){
-            for(int y = 0; y<size; y++){
-                map[x,y] = new TileObject(x,y);    
-                
-                if(y<size/4 +1 && x+y<=size/4){ //bottom left corner
-                    map[x,y].isVoid = true;
-                }/*
-                if(x>(size/4)*3 && x+y>=(size/4)*3*2){ //top right corner
-                    map[x,y].isVoid = true;
-                }*/
-
-                map[x,y].tile = Instantiate<GameObject>(tilePrefab);
-                map[x,y].tile.transform.position = new Vector2(x*tileWidth, y*tileHeight + x*0.5f*tileHeight);
-                map[x,y].tile.transform.parent = this.transform;
-                map[x,y].tile.name = "Tile: "+x+" , "+y;
-
-                map[x,y].updateColor();
-
-                map[x,y].fog = Instantiate<GameObject>(fogPrefab);
-                map[x,y].fog.transform.position = map[x,y].tile.transform.position;
-                map[x,y].fog.transform.parent = map[x,y].tile.transform;
-            }
         }
     }
 
@@ -179,5 +153,44 @@ public class Level : MonoBehaviour
 
     public void fixPlayerPosition(){
         player.transform.position = map[player.positionX,player.positionY].tile.transform.position + player.playerOffset;
+    }
+
+
+    public void generateMap(){
+        //create Map
+        map = new TileObject[size,size];
+        for(int x = 0; x<size; x++){
+            for(int y = 0; y<size; y++){
+                map[x,y] = new TileObject(x,y);    
+                
+                if(y<size/4 +1 && x+y<=size/4){ //bottom left corner
+                    map[x,y].isVoid = true;
+                }/*
+                if(x>(size/4)*3 && x+y>=(size/4)*3*2){ //top right corner
+                    map[x,y].isVoid = true;
+                }*/
+
+                map[x,y].tile = Instantiate<GameObject>(tilePrefab);
+                map[x,y].tile.transform.position = new Vector2(x*tileWidth, y*tileHeight + x*0.5f*tileHeight);
+                map[x,y].tile.transform.parent = this.transform;
+                map[x,y].tile.name = "Tile: "+x+" , "+y;
+
+                map[x,y].updateColor();
+
+                map[x,y].fog = Instantiate<GameObject>(fogPrefab);
+                map[x,y].fog.transform.position = map[x,y].tile.transform.position;
+                map[x,y].fog.transform.parent = map[x,y].tile.transform;
+            }
+        }
+    }
+
+
+    public void setStairs(){
+        stairs = Instantiate<GameObject>(stairPrefab).GetComponent<Stairs>();
+        do{
+            stairs.posX = (int)Random.Range(size*0.1f,size*0.9f);
+            stairs.posY = (int)Random.Range(size*0.1f,size*0.9f);
+        }while(stairs.posX < 0 || stairs.posY < 0 || stairs.posX >= size || stairs.posY >= size || !map[stairs.posX,stairs.posY].isWalkable() || map[stairs.posX,stairs.posY].distanceTo(player.positionX,player.positionY) < 5);
+        stairs.transform.position = map[stairs.posX,stairs.posY].tile.transform.position;
     }
 }
