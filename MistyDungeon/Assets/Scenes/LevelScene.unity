@@ -1265,10 +1265,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAmount: 1
   stage: 0
-  gamePhase: 2
+  phase: 2
+  onCooldown: 0
   level: {fileID: 2075414834}
-  phase:
-    name: Phase
+  gamePhase: 2
+  borderWidth: 0.1
 --- !u!114 &2075414834 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3122488813751924588, guid: 6767d32267091f743b30afefc91817f7, type: 3}
