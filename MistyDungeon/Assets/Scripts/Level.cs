@@ -35,13 +35,8 @@ public class Level : MonoBehaviour
     public int ySelect = 0;
 
 
-    void Start()
-    {
-        generateMap();
-        spawnPlayer();
-        setCamera();
-        generateEnemies();
-        updateTiles();
+    void Start(){
+        generateLevel();
     }
 
     void Update(){
@@ -51,6 +46,16 @@ public class Level : MonoBehaviour
     void FixedUpdate()
     {
         
+    }
+
+
+
+    public void generateLevel(){
+        generateMap();
+        spawnPlayer();
+        setCamera();
+        generateEnemies();
+        updateTiles();
     }
 
 
