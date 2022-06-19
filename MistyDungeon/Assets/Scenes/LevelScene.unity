@@ -893,6 +893,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 280354755}
   m_CullTransparentMesh: 1
+--- !u!1 &344546820 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5461200991447819381, guid: 13d6e3b4fa7e01244a0c2b121aff7ac8, type: 3}
+  m_PrefabInstance: {fileID: 1326457568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &401723023
 GameObject:
   m_ObjectHideFlags: 0
@@ -3458,6 +3463,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1386119953}
   m_CullTransparentMesh: 1
+--- !u!1 &1464327876 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5461200991447819381, guid: 13d6e3b4fa7e01244a0c2b121aff7ac8, type: 3}
+  m_PrefabInstance: {fileID: 5461200990806198582}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1464905749
 GameObject:
   m_ObjectHideFlags: 0
@@ -3616,6 +3626,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1468016407}
   m_CullTransparentMesh: 1
+--- !u!1 &1568306131 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5461200991447819381, guid: 13d6e3b4fa7e01244a0c2b121aff7ac8, type: 3}
+  m_PrefabInstance: {fileID: 937144330}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1610163313
 GameObject:
   m_ObjectHideFlags: 0
@@ -4749,6 +4764,9 @@ MonoBehaviour:
   storyOverlay: {fileID: 1842285457}
   levelupOverlay: {fileID: 1974259470}
   gameOverOverlay: {fileID: 1026540494}
+  abilityA: {fileID: 1464327876}
+  abilityB: {fileID: 344546820}
+  abilityC: {fileID: 1568306131}
   borderWidth: 0.1
   language: 1
 --- !u!114 &2075414834 stripped
