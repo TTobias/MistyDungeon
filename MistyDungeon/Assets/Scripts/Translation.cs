@@ -110,10 +110,8 @@ public static class Translation
     public static string[][] menuText = {
         //english
         new string[]{
-            new string[] {
-                "Start Game",
-                "Start Coop Game"
-            }
+            "Start Game",
+            "Start Coop Game"
 
         },
         //deutsch
