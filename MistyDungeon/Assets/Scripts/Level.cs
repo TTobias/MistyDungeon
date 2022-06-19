@@ -133,7 +133,12 @@ public class Level : MonoBehaviour
             for(int y = 0; y<size; y++){
                 map[x,y].updateColor();
                 //map[x,y].updateFog(player.positionX, player.positionY, 100, player.extViewRange); //everything is visible
-                map[x,y].updateFog(player.positionX, player.positionY, player.viewRange, player.extViewRange);
+
+                if(player.tmpRangeActive){
+                    map[x,y].updateFog(player.positionX, player.positionY, player.extViewRange, player.tmpRange);
+                }else{
+                    map[x,y].updateFog(player.positionX, player.positionY, player.viewRange, player.extViewRange);
+                }
             }
         }
     }

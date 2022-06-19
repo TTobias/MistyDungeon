@@ -20,6 +20,9 @@ public class Game : MonoBehaviour
     public GameObject storyOverlay;
     public GameObject levelupOverlay;
     public GameObject gameOverOverlay;
+    public GameObject abilityA;
+    public GameObject abilityB;
+    public GameObject abilityC;
 
     [Header("Technical")]
     public float borderWidth = 0.1f;
@@ -102,7 +105,11 @@ public class Game : MonoBehaviour
             initiateGameOver();
         }
 
-        if(player.abilitySelected == 0 || player.abilitySelected == 1 || player.abilitySelected == 3){ //move
+        level.player.lowerCooldown();
+        showCooldowns();
+
+
+        if(level.player.abilitySelected == 0 || level.player.abilitySelected == 1 || level.player.abilitySelected == 3){ //move
             level.setPreview("move");
         
             if(Input.GetMouseButtonDown(0)){
@@ -123,7 +130,7 @@ public class Game : MonoBehaviour
                 }
             }
 
-        }else if(player.abilitySelected == 2){ //teleport
+        }else if(level.player.abilitySelected == 2){ //teleport
             level.setPreview("teleport");
 
         }
@@ -131,6 +138,32 @@ public class Game : MonoBehaviour
     }
 
 
+
+    public void showCooldowns(){
+        if(level.player.abilityCooldown[0] <= 0){
+            abilityA.transform.GetChild(0).GetComponent<Text>().text = "";
+            abilityA.transform.GetChild(1).GetComponent<Image>().color = Color.gray;
+        }else{
+            abilityA.transform.GetChild(0).GetComponent<Text>().text = ""+level.player.abilityCooldown[0];
+            abilityA.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+        }
+        
+        if(level.player.abilityCooldown[1] <= 0){
+            abilityB.transform.GetChild(0).GetComponent<Text>().text = "";
+            abilityB.transform.GetChild(1).GetComponent<Image>().color = Color.gray;
+        }else{
+            abilityB.transform.GetChild(0).GetComponent<Text>().text = ""+level.player.abilityCooldown[1];
+            abilityB.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+        }
+        
+        if(level.player.abilityCooldown[2] <= 0){
+            abilityC.transform.GetChild(0).GetComponent<Text>().text = "";
+            abilityC.transform.GetChild(1).GetComponent<Image>().color = Color.gray;
+        }else{
+            abilityC.transform.GetChild(0).GetComponent<Text>().text = ""+level.player.abilityCooldown[2];
+            abilityC.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+        }
+    }
 
 
     public IEnumerator handleEnemies(){

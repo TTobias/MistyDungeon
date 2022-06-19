@@ -100,13 +100,21 @@ MonoBehaviour:
   playerNumber: 1
   alive: 1
   armor: 0
+  deathMessage: 
+  viewRange: 1
+  extViewRange: 3
+  tmpRange: 5
+  tmpRangeActive: 0
+  abilitySelected: 0
+  abilityCooldown: 000000000000000000000000
+  abilityCooldownMax: 040000000800000005000000
   arcaneArmor: 0
-  viewRange: 10
-  extViewRange: 2
+  arcaneArmorMax: 2
   items:
   - dagger
   - 
   - vision
+  itemAmount: 2
   level: {fileID: 0}
   p1Sprite: {fileID: 21300000, guid: 9c5f86b03e4e5354ba5fb400d38e98ac, type: 3}
   p2Sprite: {fileID: 21300000, guid: 64e9a5ae1a6b19b49a358e3f8ecd2250, type: 3}

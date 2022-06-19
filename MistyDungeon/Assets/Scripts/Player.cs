@@ -16,12 +16,15 @@ public class Player : MonoBehaviour
     public int viewRange = 1;
     public int extViewRange = 2;
     public int tmpRange = 5;
+    public bool tmpRangeActive = false;
     public int abilitySelected = 0;
     public int[] abilityCooldown = {0,0,0};
+    public int[] abilityCooldownMax = {4,8,5};
     public int arcaneArmor = 0; //if >0, hits the armor can take - no, time it exists
+    public int arcaneArmorMax = 2;
 
     [Header("Items")]
-    public string[] items = {"dagger","vision",""};
+    public string[] items = {"vision","teleport","shield"};
     public int itemAmount = 2;
     
     [Header("Reference")]
@@ -50,7 +53,22 @@ public class Player : MonoBehaviour
 
     public void handleAbility(Game g){
         if(abilitySelected == 1){
-
+            if(abilityCooldown[0] > 0){
+                abilitySelected = 0;
+            }else{
+                tmpRangeActive = true;
+                g.level.updateTiles();
+                abilityCooldown[0] = abilityCooldownMax[0];
+                abilitySelected = 0;
+            }
+        }else if(abilitySelected == 3){
+            if(abilityCooldown[2] > 0){
+                abilitySelected = 0;
+            }else{
+                arcaneArmor = arcaneArmorMax;
+                abilityCooldown[2] = abilityCooldownMax[2];
+                abilitySelected = 0;
+            }
         }
     }
 
@@ -67,18 +85,22 @@ public class Player : MonoBehaviour
     }
 
     public void lowerCooldown(){
-        cooldown[0] -= 1;
-        cooldown[1] -= 1;
-        cooldown[2] -= 1;
+        abilityCooldown[0] -= 1;
+        abilityCooldown[1] -= 1;
+        abilityCooldown[2] -= 1;
 
-        if(cooldown[0] < 0){
-            cooldown[0] = 0;
+        if(abilityCooldown[0] < 0){
+            abilityCooldown[0] = 0;
         }
-        if(cooldown[1] < 0){
-            cooldown[1] = 0;
+        if(abilityCooldown[1] < 0){
+            abilityCooldown[1] = 0;
         }
-        if(cooldown[2] < 0){
-            cooldown[2] = 0;
+        if(abilityCooldown[2] < 0){
+            abilityCooldown[2] = 0;
         }
+
+        tmpRangeActive = false;
+        arcaneArmor--;
+        if(arcaneArmor < 0){ arcaneArmor = 0; }
     }
 }
