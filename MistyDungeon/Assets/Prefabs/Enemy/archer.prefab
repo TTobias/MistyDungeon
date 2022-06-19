@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9075448307958830180}
   - component: {fileID: 7756873771315988037}
-  - component: {fileID: 5327785284404923686}
+  - component: {fileID: 783516938623997570}
   m_Layer: 0
   m_Name: archer
   m_TagString: Untagged
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5327785284404923686
+--- !u!114 &783516938623997570
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,9 +92,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2040488592122874144}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 651828aa5c4fcff49b6197f3691d35a2, type: 3}
+  m_Script: {fileID: 11500000, guid: c8c7acdde16837f46a203ff84d65be2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   positionX: 0
   positionY: 0
   offset: {x: 0, y: 0, z: 0}
+  mainSprite: {fileID: 21300000, guid: 9d3b6b0b593c0d249bd4c286a7d0d826, type: 3}
+  reloadSprite: {fileID: 21300000, guid: c1a4eb747ca6a9540885f0c4ae1afe44, type: 3}
