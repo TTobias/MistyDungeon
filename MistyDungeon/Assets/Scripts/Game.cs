@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class Game : MonoBehaviour
 
     [Header("Technical")]
     public float borderWidth = 0.1f;
+    public int language = 1; //deutsch
 
     [Header("Upgrade")]
     public AbilityTree skilltree = new AbilityTree();
@@ -252,7 +254,7 @@ public class Game : MonoBehaviour
         levelupOverlay.SetActive(false);
         gameOverOverlay.SetActive(false);
 
-
+        storyOverlay.transform.getChild(0).GetComponent<Text>()
     }
 
 
