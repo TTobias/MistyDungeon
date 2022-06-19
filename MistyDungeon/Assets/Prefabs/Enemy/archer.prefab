@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 9d3b6b0b593c0d249bd4c286a7d0d826, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,3 +100,5 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   mainSprite: {fileID: 21300000, guid: 9d3b6b0b593c0d249bd4c286a7d0d826, type: 3}
   reloadSprite: {fileID: 21300000, guid: c1a4eb747ca6a9540885f0c4ae1afe44, type: 3}
+  arrowPrefab: {fileID: 8146216478223905563, guid: ea2a9edede761a14aa6314a4bb8c9446, type: 3}
+  arrowSide: {fileID: 21300000, guid: 8e86389dc85641b4cace66e6a8d45d56, type: 3}

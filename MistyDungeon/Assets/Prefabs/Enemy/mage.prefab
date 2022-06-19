@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 3e67ec3a26b39564aa1e88046beeed2a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,3 +100,5 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   mainSprite: {fileID: 21300000, guid: 3e67ec3a26b39564aa1e88046beeed2a, type: 3}
   reloadSprite: {fileID: 21300000, guid: 07ea8517cc9af904d9585ef1bd2709c0, type: 3}
+  spellPrefab: {fileID: 5790688981217558137, guid: 688c96adc2174914bbc684987fa4209c, type: 3}
+  cooldown: 0

@@ -9,7 +9,7 @@ public class Game : MonoBehaviour
     [Header("Data")]
     public int playerAmount = 1;
     public int stage = 0;
-    public enum Phase{ GAME, LEVELUP, CUTSCENE};
+    public enum Phase{ GAME, LEVELUP, CUTSCENE, GAMEOVER};
     public Phase phase;
     public bool onCooldown = false;
 
@@ -96,22 +96,38 @@ public class Game : MonoBehaviour
 
 
     public void handlePlayer(int n){
-        if(Input.GetMouseButtonDown(0)){
-            //Mouse in Hexagon Area of Screen 
-            if(Input.mousePosition.x > borderWidth*Screen.width && Input.mousePosition.x < (1f-borderWidth)*Screen.width){ 
-                //HEXAGON SELECT
-                if(level.selectionIsValid()){
-                    if(level.map[level.xSelect,level.ySelect].distanceTo(level.player.positionX, level.player.positionY) == 1){ //valid move
-                        doPlayerMove(1, level.xSelect, level.ySelect);
-                    }
-                }
-
-            }
-            //Mouse in PLayer1 Area of Screen
-            else if(Input.mousePosition.x < borderWidth*Screen.width){ 
-                //ABILITIES
-            }
+        //check no move possible
+        if(!level.checkMovePossible()){
+            level.player.deathMessage = "Player was cornered";
+            initiateGameOver();
         }
+
+        if(player.abilitySelected == 0 || player.abilitySelected == 1 || player.abilitySelected == 3){ //move
+            level.setPreview("move");
+        
+            if(Input.GetMouseButtonDown(0)){
+                //Mouse in Hexagon Area of Screen 
+                if(Input.mousePosition.x > borderWidth*Screen.width && Input.mousePosition.x < (1f-borderWidth)*Screen.width){ 
+                    //HEXAGON SELECT
+                    if(level.selectionIsValid()){
+                        if(level.map[level.xSelect,level.ySelect].distanceTo(level.player.positionX, level.player.positionY) == 1 && level.isUnoccupied(level.xSelect,level.ySelect)){ //valid move
+                            
+                            doPlayerMove(1, level.xSelect, level.ySelect);
+                        }
+                    }
+
+                }
+                //Mouse in PLayer1 Area of Screen
+                else if(Input.mousePosition.x < borderWidth*Screen.width){ 
+                    //ABILITIES
+                }
+            }
+
+        }else if(player.abilitySelected == 2){ //teleport
+            level.setPreview("teleport");
+
+        }
+
     }
 
 
@@ -119,6 +135,11 @@ public class Game : MonoBehaviour
 
     public IEnumerator handleEnemies(){
         onCooldown = true;
+
+        //handle Spells
+        handleSpells();
+
+
         for(int i = 0; i<level.enemies.Count; i++){
             
             //do enemy behavior
@@ -142,6 +163,9 @@ public class Game : MonoBehaviour
 
 
     public IEnumerator PlayerMove(int n){
+
+        level.setPreview("");
+
         //make move
         int prevX = level.player.positionX, prevY = level.player.positionY;
         onCooldown = true;
@@ -157,7 +181,7 @@ public class Game : MonoBehaviour
         level.player.positionY = level.ySelect;
 
         //do kill
-        if(level.player.has("dagger")){//use dagger
+        if(/*level.player.has("dagger")*/ true){//use dagger
             level.cam.transform.parent = transform.parent;
             for(int i = 0; i<level.enemies.Count; i++){
                 if( level.distance(prevX,prevY,level.enemies[i].positionX, level.enemies[i].positionY) == 1 
@@ -180,11 +204,34 @@ public class Game : MonoBehaviour
                         level.player.transform.position += step * (1f / (float)steps);
                         yield return new WaitForSeconds(0.2f/(float)steps);
                     }
-
-
                 }
             }
             level.cam.transform.parent = level.player.transform;
+        }
+        if(/*level.player.has("spear")*/ true){//use spear
+            int dx = level.player.positionX - prevX;
+            int dy = level.player.positionY - prevY;
+            for(int i = 0; i<level.enemies.Count; i++){
+                if(level.enemies[i].positionX == prevX + 2*dx && level.enemies[i].positionY == prevY + 2*dy){
+
+                    steps = 4;
+                    step = level.enemies[i].transform.position - level.player.transform.position;
+                    step.z = 0f;
+                    for(int j = 0; j< steps ; j++){
+                        level.player.transform.position += step * (1f / (float)steps);
+                        yield return new WaitForSeconds(0.2f/(float)steps);
+                    }
+                    Enemy e = level.enemies[i];
+                    level.enemies.Remove(e);
+                    Destroy(e.gameObject);
+                    
+                    step = -step;
+                    for(int j = 0; j< steps ; j++){
+                        level.player.transform.position += step * (1f / (float)steps);
+                        yield return new WaitForSeconds(0.2f/(float)steps);
+                    }
+                }
+            }
         }
 
         //fix playerposition
@@ -198,14 +245,15 @@ public class Game : MonoBehaviour
 
         //Check if Level is finished
         if(level.player.positionX == level.stairs.posX && level.player.positionY == level.stairs.posY){
-            startLevelup();
+            //startLevelup();
+            startStory();
         }
     }
 
 
     public void startLevelup(){
         phase = Phase.LEVELUP;
-        
+
         storyOverlay.SetActive(false);
         levelupOverlay.SetActive(true);
         gameOverOverlay.SetActive(false);
@@ -246,6 +294,13 @@ public class Game : MonoBehaviour
         }
     }
 
+
+
+    public void handleSpells(){
+        for(int i = 0; i<level.spells.Count; i++){
+            level.spells[i].runTimer(level);
+        }
+    }
     
     public void startStory(){
         phase = Phase.CUTSCENE;
@@ -272,16 +327,33 @@ public class Game : MonoBehaviour
     public void upgrade1P2(){ selectUpgrade(2,0); }
     public void upgrade2P2(){ selectUpgrade(2,1); }
     public void upgrade3P2(){ selectUpgrade(2,2); }
+    
+
+
+    public void selectAbility(int i){
+        if(level.player.abilitySelected == i){
+            level.player.abilitySelected = 0;
+        }else{
+            level.player.abilitySelected = i; 
+            level.player.handleAbility(this);
+        }
+    }
+
+    public void btnAbility1(){ selectAbility(1); }
+    public void btnAbility2(){ selectAbility(2); }
+    public void btnAbility3(){ selectAbility(3); }
 
 
     public void initiateGameOver(){
+        string msg = level.player.deathMessage;
+        phase = Phase.GAMEOVER;
         Debug.Log("Game Over");
         level.clearLevel();
         gameOverOverlay.SetActive(true);
         storyOverlay.SetActive(false);
         levelupOverlay.SetActive(false);
 
-        gameOverOverlay.transform.GetChild(1).GetComponent<Text>().text = "Depth reached : "+level.depthLevel;
+        gameOverOverlay.transform.GetChild(1).GetComponent<Text>().text = "Depth reached : "+level.depthLevel+"\n"+msg;
     }
 
 

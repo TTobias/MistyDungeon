@@ -46,6 +46,7 @@ MonoBehaviour:
   player: {fileID: 0}
   enemies: []
   stairs: {fileID: 0}
+  spells: []
   depthLevel: 0
   difficulty: 1
   enemyAmount: 5
@@ -56,6 +57,8 @@ MonoBehaviour:
   fogPrefab: {fileID: 7122083516521571655, guid: cb991be545b24204f9da0ebe77aa6ef0, type: 3}
   playerPrefab: {fileID: 8310925370877531498, guid: 6309377779d872f44a3305724a55e3a4, type: 3}
   skeletonPrefab: {fileID: 2040488592122874144, guid: 4dc3ce9a2fd9c9b4181bbeeb6c26d902, type: 3}
+  archerPrefab: {fileID: 2040488592122874144, guid: a50f8f99bf783a5479510d74a3284847, type: 3}
+  magePrefab: {fileID: 2040488592122874144, guid: 103bf36f4a4c25349b2f9939f0d05345, type: 3}
   stairPrefab: {fileID: 6241469273300931504, guid: 443ff83e7b73f33499d334d148f593ec, type: 3}
   levelLoaded: 0
   CameraOffset: {x: 0, y: 0, z: -10}

@@ -99,7 +99,7 @@ public class Skeleton : Enemy
             transform.position += step * (1f / (float)steps);
             yield return new WaitForSeconds(0.1f/(float)steps);
         }
-        level.player.takeDamage();
+        level.player.takeDamage("Killed by Skeleton Warrior");
                     
         step = -step;
         for(int j = 0; j< steps ; j++){

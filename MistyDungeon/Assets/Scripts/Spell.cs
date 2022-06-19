@@ -35,14 +35,36 @@ public class Spell : MonoBehaviour
         }
     }
 
-    public void runTimer(){
+    public void runTimer(Level l){
         timer--;
         if(timer <= 0){
-            explode();
+            StartCoroutine(explode(l));
         }
     }
 
-    public void explode(){
+    public IEnumerator explode(Level l){
+        switch (type)
+        {
+            case(0):
+                GetComponent<SpriteRenderer>().sprite = spriteEA;
+                break;
+            case(1):
+                GetComponent<SpriteRenderer>().sprite = spriteP1A;
+                break;
+            case(2):
+            default:
+                GetComponent<SpriteRenderer>().sprite = spriteP2A;
+                break;
+        }
 
+
+        if(l.player.positionX == xPos && l.player.positionY == yPos){
+            l.player.takeDamage("Killed by Magic");
+        }
+
+        yield return new WaitForSeconds(0.24f);
+
+        l.spells.Remove(this);
+        Destroy(this.gameObject);
     }
 }

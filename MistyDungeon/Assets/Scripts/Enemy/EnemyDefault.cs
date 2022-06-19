@@ -17,6 +17,14 @@ public class Enemy : MonoBehaviour
         positionY = y;
     }
 
+    public virtual void initialize(){
+
+    }
+
+    public virtual string deathMessage(){
+        return "Killed by enemy";
+    }
+
     public virtual void doTurn(Level l){
         Debug.Log("ENEMY BEHAVIOR IS MISSING");
     }

@@ -24,6 +24,8 @@ public class Level : MonoBehaviour
     public GameObject fogPrefab;
     public GameObject playerPrefab;
     public GameObject skeletonPrefab;
+    public GameObject archerPrefab;
+    public GameObject magePrefab;
     public GameObject stairPrefab;
     public bool levelLoaded = false;
 
@@ -37,6 +39,30 @@ public class Level : MonoBehaviour
     //Last selected tile
     public int xSelect = 0;
     public int ySelect = 0;
+    public string previewType = "";
+
+
+
+    public void setPreview(string s){
+        if(previewType != s){
+            previewType = s;
+
+            for(int x = 0; x<size; x++){
+                for(int y = 0; y<size; y++){
+
+                    map[x,y].highlighted = false;
+                    if(previewType == "move"){
+                        if(map[x,y].isWalkable() && isUnoccupied(x,y) && distance(x,y,player.positionX,player.positionY) == 1){
+                            map[x,y].highlighted = true;
+                        }
+                    }
+
+                }
+            }
+
+            updateTiles();
+        }
+    }
 
 
     void Start(){
@@ -57,6 +83,9 @@ public class Level : MonoBehaviour
 
 
     public void generateLevel(){
+        difficulty = depthLevel+1;
+        enemyAmount = difficulty+3;
+
         levelLoaded = true;
         generateMap();
         spawnPlayer();
@@ -74,6 +103,11 @@ public class Level : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
         map = new TileObject[0,0];
+
+        foreach (Spell s in spells) {
+            GameObject.Destroy(s.transform.gameObject);
+        }
+        spells = new List<Spell>();
 
         Destroy(player.gameObject);
 
@@ -119,13 +153,94 @@ public class Level : MonoBehaviour
 
 
     public void generateEnemies(){
-        for(int i = 0; i < enemyAmount; i++){
+        int am_skel = 0;
+        int am_mage = 0;
+        int am_arch = 0;
+
+        if(difficulty < 4){
+            am_skel = enemyAmount;
+            enemyAmount -= am_skel;
+        }else if(difficulty < 10){
+            am_skel = (int)(enemyAmount*0.7f);
+            enemyAmount -= am_skel;
+            am_mage = enemyAmount;
+            enemyAmount -= am_mage;
+        }else if(difficulty < 15){
+            am_skel = (int)(enemyAmount*0.6f);
+            enemyAmount -= am_skel;
+            am_mage = (int)(enemyAmount*0.7f);
+            enemyAmount -= am_mage;
+            am_arch = enemyAmount;
+            enemyAmount -= am_arch;
+        }else if(difficulty < 20){
+            am_skel = (int)(enemyAmount*0.5f);
+            enemyAmount -= am_skel;
+            am_mage = (int)(enemyAmount*0.5f);
+            enemyAmount -= am_mage;
+            am_arch = enemyAmount;
+            enemyAmount -= am_arch;
+        }else if(difficulty < 25){
+            am_skel = (int)(enemyAmount*0.1f);
+            enemyAmount -= am_skel;
+            am_mage = (int)(enemyAmount*0.7f);
+            enemyAmount -= am_mage;
+            am_arch = enemyAmount;
+            enemyAmount -= am_arch;
+        }else if(difficulty < 30){
+            am_skel = (int)(enemyAmount*0.2f);
+            enemyAmount -= am_skel;
+            am_mage = (int)(enemyAmount*0.2f);
+            enemyAmount -= am_mage;
+            am_arch = enemyAmount;
+            enemyAmount -= am_arch;
+        }else{
+            am_skel = Random.Range(2,enemyAmount-4);
+            enemyAmount -= am_skel;
+            am_mage = Random.Range(1,enemyAmount-1);
+            enemyAmount -= am_mage;
+            am_arch = enemyAmount;
+            enemyAmount -= am_arch;
+        }
+
+        /*for(int i = 0; i < enemyAmount; i++){
             Enemy e = Instantiate<GameObject>(skeletonPrefab).GetComponent<Enemy>();
             e.positionX = (int)Random.Range(size*0.1f,size*0.9f);
             e.positionY = (int)Random.Range(size*0.1f,size*0.9f);
 
             e.transform.position = map[e.positionX,e.positionY].tile.transform.position + e.offset;
 
+            enemies.Add(e);
+        }*/
+
+
+        for(int i = 0; i < am_skel; i++){
+            Enemy e = Instantiate<GameObject>(skeletonPrefab).GetComponent<Enemy>();
+            e.initialize();
+            do{
+                e.positionX = (int)Random.Range(size*0.1f,size*0.9f);
+                e.positionY = (int)Random.Range(size*0.1f,size*0.9f);
+            }while(e.positionX < 0 || e.positionY < 0 || e.positionX >= size || e.positionY >= size || !map[e.positionX,e.positionY].isWalkable() || !isUnoccupied(e.positionX,e.positionY) || map[e.positionX,e.positionY].distanceTo(player.positionX,player.positionY) < 2);
+            e.transform.position = map[e.positionX,e.positionY].tile.transform.position + e.offset;
+            enemies.Add(e);
+        }
+        for(int i = 0; i < am_arch; i++){
+            Enemy e = Instantiate<GameObject>(archerPrefab).GetComponent<Enemy>();
+            e.initialize();
+            do{
+                e.positionX = (int)Random.Range(size*0.1f,size*0.9f);
+                e.positionY = (int)Random.Range(size*0.1f,size*0.9f);
+            }while(e.positionX < 0 || e.positionY < 0 || e.positionX >= size || e.positionY >= size || !map[e.positionX,e.positionY].isWalkable() || !isUnoccupied(e.positionX,e.positionY) || map[e.positionX,e.positionY].distanceTo(player.positionX,player.positionY) < 2);
+            e.transform.position = map[e.positionX,e.positionY].tile.transform.position + e.offset;
+            enemies.Add(e);
+        }
+        for(int i = 0; i < am_mage; i++){
+            Enemy e = Instantiate<GameObject>(magePrefab).GetComponent<Enemy>();
+            e.initialize();
+            do{
+                e.positionX = (int)Random.Range(size*0.1f,size*0.9f);
+                e.positionY = (int)Random.Range(size*0.1f,size*0.9f);
+            }while(e.positionX < 0 || e.positionY < 0 || e.positionX >= size || e.positionY >= size || !map[e.positionX,e.positionY].isWalkable() || !isUnoccupied(e.positionX,e.positionY) || map[e.positionX,e.positionY].distanceTo(player.positionX,player.positionY) < 2);
+            e.transform.position = map[e.positionX,e.positionY].tile.transform.position + e.offset;
             enemies.Add(e);
         }
     }
@@ -153,8 +268,25 @@ public class Level : MonoBehaviour
     }
 
 
+    public bool checkMovePossible(){
+        int[] rx = {-1, -1, 0, 1, 1, 0};
+        int[] ry = {0, 1, 1, 0, -1, -1};
+
+        for(int i = 0; i<6; i++){
+            int tx = player.positionX + rx[i];
+            int ty = player.positionY + ry[i];
+            if(tx >= 0 && ty >= 0 && tx < size && ty < size && levelLoaded){
+                if(map[tx,ty].isWalkable() && isUnoccupied(tx,ty)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
     public bool selectionIsValid(){
-        if( xSelect >= 0 && ySelect >= 0 && xSelect < size && ySelect < size ){
+        if( xSelect >= 0 && ySelect >= 0 && xSelect < size && ySelect < size && levelLoaded){
             return map[xSelect,ySelect].isWalkable();
         }
         return false;
@@ -228,6 +360,11 @@ public class Level : MonoBehaviour
     }
 
 
+    public bool inLine(int x1, int y1, int x2, int y2){ //distance of hexfields, 1 is source 2 is target
+        return (x1 == x2) || (y1 == y2) || (((x1 < x2 && y1 > y2) || (x1 > x2 && y1 < y2)) && Mathf.Abs(x1-x2) == Mathf.Abs(y1-y2));
+    }
+
+
     public bool isUnoccupied(int x, int y){
         foreach(Enemy e in enemies){
             if(e.positionX == x && e.positionY == y){
@@ -238,5 +375,10 @@ public class Level : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+
+    public void addSpell(Spell s){
+        spells.Add(s);
     }
 }

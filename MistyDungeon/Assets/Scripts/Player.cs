@@ -10,11 +10,15 @@ public class Player : MonoBehaviour
     public int playerNumber = 1;
     public bool alive = true;
     public int armor = 0;
-    public int arcaneArmor = 0; //if >0, hits the armor can take
+    public string deathMessage = "";
 
     [Header("Ability")]
     public int viewRange = 1;
     public int extViewRange = 2;
+    public int tmpRange = 5;
+    public int abilitySelected = 0;
+    public int[] abilityCooldown = {0,0,0};
+    public int arcaneArmor = 0; //if >0, hits the armor can take - no, time it exists
 
     [Header("Items")]
     public string[] items = {"dagger","vision",""};
@@ -34,11 +38,19 @@ public class Player : MonoBehaviour
     }
 
 
-    public void takeDamage(){
+    public void takeDamage(string s){
         if(armor > 0){
             armor--;
         }else{
             alive = false;
+            deathMessage = s;
+        }
+    }
+
+
+    public void handleAbility(Game g){
+        if(abilitySelected == 1){
+
         }
     }
 
@@ -51,6 +63,22 @@ public class Player : MonoBehaviour
         if(playerNumber == 2){
             this.GetComponent<SpriteRenderer>().sprite = p2Sprite;
             playerOffset = new Vector3(0f, 0f, 0f);
+        }
+    }
+
+    public void lowerCooldown(){
+        cooldown[0] -= 1;
+        cooldown[1] -= 1;
+        cooldown[2] -= 1;
+
+        if(cooldown[0] < 0){
+            cooldown[0] = 0;
+        }
+        if(cooldown[1] < 0){
+            cooldown[1] = 0;
+        }
+        if(cooldown[2] < 0){
+            cooldown[2] = 0;
         }
     }
 }
