@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public int[] abilityCooldownMax = {4,8,5};
     public int arcaneArmor = 0; //if >0, hits the armor can take - no, time it exists
     public int arcaneArmorMax = 2;
+    public int teleportRange = 3;
 
     [Header("Items")]
     public string[] items = {"vision","teleport","shield"};
@@ -42,12 +43,19 @@ public class Player : MonoBehaviour
 
 
     public void takeDamage(string s){
-        if(armor > 0){
+        if(arcaneArmor> 0){
+
+        }else if(armor > 0){
             armor--;
         }else{
             alive = false;
             deathMessage = s;
         }
+    }
+
+
+    public void teleportUsed(){
+        abilityCooldown[1] = abilityCooldownMax[1];
     }
 
 
@@ -70,6 +78,8 @@ public class Player : MonoBehaviour
                 abilitySelected = 0;
             }
         }
+
+        g.showCooldowns();
     }
 
 
@@ -102,5 +112,7 @@ public class Player : MonoBehaviour
         tmpRangeActive = false;
         arcaneArmor--;
         if(arcaneArmor < 0){ arcaneArmor = 0; }
+
+        Debug.Log("TEST");
     }
 }

@@ -105,9 +105,6 @@ public class Game : MonoBehaviour
             initiateGameOver();
         }
 
-        level.player.lowerCooldown();
-        showCooldowns();
-
 
         if(level.player.abilitySelected == 0 || level.player.abilitySelected == 1 || level.player.abilitySelected == 3){ //move
             level.setPreview("move");
@@ -133,6 +130,23 @@ public class Game : MonoBehaviour
         }else if(level.player.abilitySelected == 2){ //teleport
             level.setPreview("teleport");
 
+            if(Input.GetMouseButtonDown(0)){
+                //Mouse in Hexagon Area of Screen 
+                if(Input.mousePosition.x > borderWidth*Screen.width && Input.mousePosition.x < (1f-borderWidth)*Screen.width){ 
+                    //HEXAGON SELECT
+                    if(level.selectionIsValid()){
+                        if(level.map[level.xSelect,level.ySelect].distanceTo(level.player.positionX, level.player.positionY) <= level.player.teleportRange && level.isUnoccupied(level.xSelect,level.ySelect)){ //valid move
+                            
+                           StartCoroutine(doTeleport(1));
+                        }
+                    }
+
+                }
+                //Mouse in PLayer1 Area of Screen
+                else if(Input.mousePosition.x < borderWidth*Screen.width){ 
+                    //ABILITIES
+                }
+            }
         }
 
     }
@@ -142,31 +156,35 @@ public class Game : MonoBehaviour
     public void showCooldowns(){
         if(level.player.abilityCooldown[0] <= 0){
             abilityA.transform.GetChild(0).GetComponent<Text>().text = "";
-            abilityA.transform.GetChild(1).GetComponent<Image>().color = Color.gray;
+            abilityA.transform.GetChild(1).GetComponent<Image>().color = Color.white;
         }else{
             abilityA.transform.GetChild(0).GetComponent<Text>().text = ""+level.player.abilityCooldown[0];
-            abilityA.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+            abilityA.transform.GetChild(1).GetComponent<Image>().color = Color.gray;
         }
         
         if(level.player.abilityCooldown[1] <= 0){
             abilityB.transform.GetChild(0).GetComponent<Text>().text = "";
-            abilityB.transform.GetChild(1).GetComponent<Image>().color = Color.gray;
+            abilityB.transform.GetChild(1).GetComponent<Image>().color = Color.white;
         }else{
             abilityB.transform.GetChild(0).GetComponent<Text>().text = ""+level.player.abilityCooldown[1];
-            abilityB.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+            abilityB.transform.GetChild(1).GetComponent<Image>().color = Color.gray;
         }
         
         if(level.player.abilityCooldown[2] <= 0){
             abilityC.transform.GetChild(0).GetComponent<Text>().text = "";
-            abilityC.transform.GetChild(1).GetComponent<Image>().color = Color.gray;
+            abilityC.transform.GetChild(1).GetComponent<Image>().color = Color.white;
         }else{
             abilityC.transform.GetChild(0).GetComponent<Text>().text = ""+level.player.abilityCooldown[2];
-            abilityC.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+            abilityC.transform.GetChild(1).GetComponent<Image>().color = Color.gray;
         }
+
+
+        level.player.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = level.player.arcaneArmor > 0;
     }
 
 
     public IEnumerator handleEnemies(){
+
         onCooldown = true;
 
         //handle Spells
@@ -187,6 +205,9 @@ public class Game : MonoBehaviour
             ////ALSO UPDATE ARMOR INDICATOR
         }
         onCooldown = false;
+
+        level.player.lowerCooldown();
+        showCooldowns();
     }
 
 
@@ -266,6 +287,45 @@ public class Game : MonoBehaviour
                 }
             }
         }
+
+        //fix playerposition
+        level.fixPlayerPosition();
+        level.updateTiles();
+        level.resetCameraPosition(n);
+
+
+        onCooldown = false;
+        gamePhase = GamePhase.PLAYER2;
+
+        //Check if Level is finished
+        if(level.player.positionX == level.stairs.posX && level.player.positionY == level.stairs.posY){
+            //startLevelup();
+            startStory();
+        }
+    }
+
+
+
+    public IEnumerator doTeleport(int n){
+
+        level.setPreview("");
+
+        level.player.teleportUsed();
+
+        //make move
+        int prevX = level.player.positionX, prevY = level.player.positionY;
+        onCooldown = true;
+
+        int steps = 10;
+        Vector3 step = level.map[level.xSelect,level.ySelect].tile.transform.position - level.player.transform.position;
+        step.z = 0f;
+        for(int i = 0; i< steps ; i++){
+            level.player.transform.position += step * (1f / (float)steps);
+            yield return new WaitForSeconds(0.5f/(float)steps);
+        }
+        level.player.positionX = level.xSelect;
+        level.player.positionY = level.ySelect;
+
 
         //fix playerposition
         level.fixPlayerPosition();

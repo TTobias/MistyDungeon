@@ -57,6 +57,12 @@ public class Level : MonoBehaviour
                         }
                     }
 
+                    else if(previewType == "teleport"){
+                        if(map[x,y].isWalkable() && isUnoccupied(x,y) && distance(x,y,player.positionX,player.positionY) <= player.teleportRange){
+                            map[x,y].highlighted = true;
+                        }
+                    }
+
                 }
             }
 
