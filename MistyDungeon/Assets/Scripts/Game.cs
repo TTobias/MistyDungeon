@@ -254,8 +254,8 @@ public class Game : MonoBehaviour
         levelupOverlay.SetActive(false);
         gameOverOverlay.SetActive(false);
 
-        if(level.depthLevel < Translation.cutscenetext[language].Length){
-            storyOverlay.transform.GetChild(0).GetComponent<Text>().text = Translation.cutscenetext[language][level.depthLevel][playerAmount-1];
+        if(level.depthLevel < Translation.cutsceneText[language].Length){
+            storyOverlay.transform.GetChild(0).GetComponent<Text>().text = Translation.cutsceneText[language][level.depthLevel][playerAmount-1];
         }else{
             storyOverlay.transform.GetChild(0).GetComponent<Text>().text = "...";
         }
