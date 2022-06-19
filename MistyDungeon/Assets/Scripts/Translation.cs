@@ -17,23 +17,28 @@ public static class Translation
         new string[][] {
             //depth 0 (intro)
             new string[] {
-                "INTRO TEXT - ENG - SINGLE",
-                "INTRO TEXT - ENG - COOP"
+                "You are an Agent working for the Ministry for fighting Monsters. Three weeks ago an mysterious dark Mist appeared. While searching for the source of the mist you noticed your teamleader sneaking around and decided to follow him. You lose him in a forest. While looking around you notice an cave entrance. You decide to explor the cave. What mystery will await you?",
+                "You are an Agent working for the Ministry for fighting Monsters. Three weeks ago an mysterious dark Mist appeared. While searching for the source of the mist you noticed your teamleader sneaking around and decided to follow him. You lose him in a forest. While looking around you notice an cave entrance. After calling your college, you decide to explor the cave together. What mystery will await you?"
             },
             //depth 1
             new string[] {
-                "DEPTH 1 - ENG - SINGLE",
-                "DEPTH 1 - ENG - COOP"
+                "The Higher Ups are getting more and more crazy. This time they have gone to far. I need to stop them. Maybe ****(unreaadable name) can help me. He often criticeses the bosses. I will write him an anonymos letter and ask him for help. Maybe he can even say a good word in the MFFM for me. Signed Zera 19.08.100 While reading you notice some things: This entry is 4 weeks old and your Miniterium the MFFM is mentioned. In addition this entry seems to be made by a human, but you only encountered skeletons.",
+                "The Higher Ups are getting more and more crazy. This time they have gone to far. I need to stop them. Maybe ****(unreaadable name) can help me. He often criticeses the bosses. I will write him an anonymos letter and ask him for help. Maybe he can even say a good word in the MFFM for me. Signed Zera 19.08.100 While reading you notice some things: This entry is 4 weeks old and your Miniterium the MFFM is mentioned. In addition this entry seems to be made by a human, but you only encountered skeletons."
             },
             //depth 2
             new string[] {
-                "DEPTH 2 - ENG - SINGLE",
-                "DEPTH 2 - ENG - COOP"
+                "Another page from Zera's notebook: He agreed with me that we have to stop the plan, but he said he wants to meet first and that I should bring the important evidence with me. I'm no longer so sure if he will actually work against the organization, even if he regularly gets into trouble with the Higher Ups. Could he lure me into a trap?",
+                "Another page from Zera's notebook: He agreed with me that we have to stop the plan, but he said he wants to meet first and that I should bring the important evidence with me. I'm no longer so sure if he will actually work against the organization, even if he regularly gets into trouble with the Higher Ups. Could he lure me into a trap?"
             },
             //depth 3
             new string[] {
-                "DEPTH 3 - ENG - SINGLE",
-                "DEPTH 3 - ENG - COOP"
+                "Zera's notebook It was a trap. Thank God I was able to escape, but my only option is to go deeper inside the caves. He probably has already stopped the evidence I sent to the MBM. The only hope I have left is the hope that someone good will find my notes. If im still alive I hope we can meet. Signed Zera",
+                "Zera's notebook It was a trap. Thank God I was able to escape, but my only option is to go deeper inside the caves. He probably has already stopped the evidence I sent to the MBM. The only hope I have left is the hope that someone good will find my notes. If im still alive I hope we can meet. Signed Zera"
+            },
+            //depth 4
+            new string[] {
+                "Encrypted message encoded according to a standard MBM code: It's good that you followed me, need quick help, meet me later at the exit and be careful when sniffing around. PS. I have already informed the ministry. PSS. It's best to stay on the upper levels for now. PSSS. Next time don't follow your superiors. Kind regards. Team leader Sebastian",
+                "Encrypted message encoded according to a standard MBM code: It's good that you followed me, need quick help, meet me later at the exit and be careful when sniffing around. PS. I have already informed the ministry. PSS. It's best to stay on the upper levels for now. PSSS. Next time don't follow your superiors. Kind regards. Team leader Sebastian"
             },
         },
 
@@ -52,12 +57,17 @@ public static class Translation
             //depth 2
             new string[] {
                 "Eine weitere Seite aus Zeras Notizbuch: Er hat mir darin zugestimmt, das wir den Plan verhindern müssen, allerdings meinte er, dass er sich zuerst trefen will und ich die wichtigen Beweise mitbringen soll. Ich bin mir mittlerweile nicht mehr so sicher, ob er wirklich gegen die Organisation arbeiten wird, auch wenn er regelmäßig in Konflikte mit den Bosseb gerät. Könnte er mich in eine Falle locken?",
-                "DEPTH 2 - GER - COOP"
+                "Eine weitere Seite aus Zeras Notizbuch: Er hat mir darin zugestimmt, das wir den Plan verhindern müssen, allerdings meinte er, dass er sich zuerst trefen will und ich die wichtigen Beweise mitbringen soll. Ich bin mir mittlerweile nicht mehr so sicher, ob er wirklich gegen die Organisation arbeiten wird, auch wenn er regelmäßig in Konflikte mit den Bosseb gerät. Könnte er mich in eine Falle locken?"
             },
             //depth 3
             new string[] {
                 "Zeras Notizbuch: Es war eine Falle. Gott sei dank, konnte ich entkommen, allerdings bleibt mir nur die Möglichkeit tiefer in die Höhlen hinabzusteigen. Die Beweise die ich an das MBM geschickt habe hat er wahrscheinlich ebenfalls bereits abgefangen. Das einzige was mir bleibt ist meine Notizen, in der Hoffnung, dass sie jemand Gutes findet, in der Höhle zu zerstreuen. Hoffentlich können sie dir helfen.",
-                "DEPTH 3 - GER - COOP"
+                "Zeras Notizbuch: Es war eine Falle. Gott sei dank, konnte ich entkommen, allerdings bleibt mir nur die Möglichkeit tiefer in die Höhlen hinabzusteigen. Die Beweise die ich an das MBM geschickt habe hat er wahrscheinlich ebenfalls bereits abgefangen. Das einzige was mir bleibt ist meine Notizen, in der Hoffnung, dass sie jemand Gutes findet, in der Höhle zu zerstreuen. Hoffentlich können sie dir helfen."
+            },
+            //depth 4
+            new string[] {
+                "Du findest eine verschlüsselte Nachricht, die nach einem Standart MBM Code verschlüsselt ist: Gut das du mir gefolgt bist, ich brauche schnelle deine Hilfe, treff mich später am Ausgang und seivorsichtig beim rumschnüffeln.PS. Ich habe bereits das Ministerium informiert. PSS. Am besten bleibst du erstmal auf den oberen Ebenen. PSSS. Beim nächsten mal nicht deinem vorgesetzten heimlich Folgen. Mfg. Teamleader Sebastian",
+                "Ihr findet eine verschlüsselte Nachricht, die nach einem Standart MBM Code verschlüsselt ist: Gut das ihr mir gefolgt seit, brauche schnelle Hilfe, trefft mich später am Ausgang und seit vorsichtig beim rumschnüffeln.PS. Ich habe bereits das Ministerium informiert. PSS. Am besten bleibt ihr erstmal auf den oberen Ebenen. PSSS. Beim nächsten mal nicht eueren vorgesetzten Folgen. Mfg. Teamleader Sebastian"
             },
         }
     };
@@ -111,12 +121,18 @@ public static class Translation
         //english
         new string[]{
             "Start Game",
-            "Start Coop Game"
-
+            "Start Coop Game",
+            "Achievements",
+            "Options",
+            "Exit"
         },
         //deutsch
         new string[] {
-
+            "Spiel starten",
+            "Koop Spiel starten",
+            "Errungenschaften",
+            "Einstellungen",
+            "Beenden"
         }
     };
 
