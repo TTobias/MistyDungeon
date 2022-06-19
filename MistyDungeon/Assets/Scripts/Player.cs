@@ -26,11 +26,8 @@ public class Player : MonoBehaviour
     public Vector3 playerOffset = new Vector3(0.1f,0.1f,0f);
 
     
-    public bool hasDagger(){
-        return items[0] == "dagger" || items[1] == "dagger" || items[2] == "dagger";
-    }
-    public bool hasSpear(){
-        return items[0] == "spear" || items[1] == "spear" || items[2] == "spear";
+    public bool has(string s){
+        return items[0] == s || items[1] == s || items[2] == s;
     }
 
 

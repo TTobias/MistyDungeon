@@ -67,16 +67,18 @@ public class Skeleton : Enemy
     IEnumerator moveTo(int x, int y, Level level){
         //make move
         //onCooldown = true;
+        int prevX = positionX;
+        int prevY = positionY;
+        positionX = x;
+        positionY = y;
 
         int steps = 10;
-        Vector3 step = level.map[x,y].tile.transform.position - level.map[positionX,positionY].tile.transform.position;
+        Vector3 step = level.map[x,y].tile.transform.position - level.map[prevX,prevY].tile.transform.position;
         step.z = 0f;
         for(int i = 0; i< steps ; i++){
             transform.position += step * (1f / (float)steps);
             yield return new WaitForSeconds(0.2f/(float)steps);
         }
-        positionX = x;
-        positionY = y;
 
         //fix position
         transform.position = level.map[x,y].tile.transform.position + offset;
@@ -85,8 +87,13 @@ public class Skeleton : Enemy
     }
 
     IEnumerator attack(int x, int y, Level level){
+        int prevX = positionX;
+        int prevY = positionY;
+        positionX = x;
+        positionY = y;
+
         int steps = 4;
-        Vector3 step = level.map[x,y].tile.transform.position - level.map[positionX,positionY].tile.transform.position;
+        Vector3 step = level.map[x,y].tile.transform.position - level.map[prevX,prevY].tile.transform.position;
         step.z = 0f;
         for(int j = 0; j< steps ; j++){
             transform.position += step * (1f / (float)steps);

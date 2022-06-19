@@ -550,7 +550,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2053861989}
         m_TargetAssemblyTypeName: Game, Assembly-CSharp
-        m_MethodName: upgrade1P1
+        m_MethodName: backToMenuBtn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4518,7 +4518,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2053861989}
         m_TargetAssemblyTypeName: Game, Assembly-CSharp
-        m_MethodName: upgrade1P1
+        m_MethodName: restartBtn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4698,6 +4698,7 @@ MonoBehaviour:
   levelupOverlay: {fileID: 1974259470}
   gameOverOverlay: {fileID: 1026540494}
   borderWidth: 0.1
+  language: 1
 --- !u!114 &2075414834 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3122488813751924588, guid: 6767d32267091f743b30afefc91817f7, type: 3}
@@ -4865,14 +4866,6 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 519420031}
-    - target: {fileID: 3122488813751924588, guid: 6767d32267091f743b30afefc91817f7, type: 3}
-      propertyPath: fogPrefab
-      value: 
-      objectReference: {fileID: 7122083516521571655, guid: cb991be545b24204f9da0ebe77aa6ef0, type: 3}
-    - target: {fileID: 3122488813751924588, guid: 6767d32267091f743b30afefc91817f7, type: 3}
-      propertyPath: stairPrefab
-      value: 
-      objectReference: {fileID: 6241469273300931504, guid: 443ff83e7b73f33499d334d148f593ec, type: 3}
     - target: {fileID: 3122488813751924590, guid: 6767d32267091f743b30afefc91817f7, type: 3}
       propertyPath: m_Name
       value: Test Level

@@ -11,7 +11,7 @@ public class Level : MonoBehaviour
     public Stairs stairs;
 
     [Header("Generator")]
-    public int depthLevel = 1;
+    public int depthLevel = 0;
     public int difficulty = 1;
     public int enemyAmount = 5;
     public int size = 20;
@@ -43,8 +43,9 @@ public class Level : MonoBehaviour
     }
 
     void Update(){
-        if(levelLoaded)
+        if(levelLoaded){
             selectTile();
+        }
     }
 
     void FixedUpdate()
@@ -152,7 +153,10 @@ public class Level : MonoBehaviour
 
 
     public bool selectionIsValid(){
-        return xSelect >= 0 && ySelect >= 0 && xSelect < size && ySelect < size && map[xSelect,ySelect].isWalkable();
+        if( xSelect >= 0 && ySelect >= 0 && xSelect < size && ySelect < size ){
+            return map[xSelect,ySelect].isWalkable();
+        }
+        return false;
     }
 
 

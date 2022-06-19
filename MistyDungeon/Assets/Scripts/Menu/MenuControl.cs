@@ -8,10 +8,14 @@ public class MenuControl : MonoBehaviour
     
     
     public void btnStartGame(){
-
+        SceneManager.LoadScene(2);
     }
 
     public void btnStartCoopGame(){
+
+    }
+
+    public void btnAchievements(){
 
     }
 
@@ -20,6 +24,6 @@ public class MenuControl : MonoBehaviour
     }
 
     public void btnExit(){
-
+        Application.Quit();
     }
 }

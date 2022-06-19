@@ -157,7 +157,7 @@ public class Game : MonoBehaviour
         level.player.positionY = level.ySelect;
 
         //do kill
-        if(level.player.hasDagger()){//use dagger
+        if(level.player.has("dagger")){//use dagger
             level.cam.transform.parent = transform.parent;
             for(int i = 0; i<level.enemies.Count; i++){
                 if( level.distance(prevX,prevY,level.enemies[i].positionX, level.enemies[i].positionY) == 1 
@@ -213,11 +213,11 @@ public class Game : MonoBehaviour
         level.clearLevel();
 
         if(playerAmount == 1){
+            List<Skill> opt = skilltree.findOptions(level.player);
 
-            upgradeOptions = new Skill[3];
-            List<Skill> opt = skilltree.findOptions(1);
-            for(int i = 0; i<3; i++){
-                Skill s = opt[(int)Random.Range(0, opt.Count-0.1f)];
+            upgradeOptions = new Skill[Mathf.Min(opt.Count, 3)];
+            for(int i = 0; i<upgradeOptions.Length; i++){
+                Skill s = opt[Random.Range(0, opt.Count)];
                 opt.Remove(s);
                 upgradeOptions[i] = s;
             }
@@ -254,7 +254,11 @@ public class Game : MonoBehaviour
         levelupOverlay.SetActive(false);
         gameOverOverlay.SetActive(false);
 
-        storyOverlay.transform.getChild(0).GetComponent<Text>()
+        if(level.depthLevel < Translation.cutscenetext[language].Length){
+            storyOverlay.transform.GetChild(0).GetComponent<Text>().text = Translation.cutscenetext[language][level.depthLevel][playerAmount-1];
+        }else{
+            storyOverlay.transform.GetChild(0).GetComponent<Text>().text = "...";
+        }
     }
 
 
@@ -276,15 +280,17 @@ public class Game : MonoBehaviour
         gameOverOverlay.SetActive(true);
         storyOverlay.SetActive(false);
         levelupOverlay.SetActive(false);
+
+        gameOverOverlay.transform.GetChild(1).GetComponent<Text>().text = "Depth reached : "+level.depthLevel;
     }
 
 
 
     public void backToMenuBtn(){
-        //SceneManagement.Load()
+        SceneManager.LoadScene(0);
     }
 
     public void restartBtn(){
-        
+        SceneManager.LoadScene(2);
     }
 }
