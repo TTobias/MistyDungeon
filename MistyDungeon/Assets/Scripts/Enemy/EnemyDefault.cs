@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
         positionY = y;
     }
 
-    public void doTurn(Level l){
-        //pass
+    public virtual void doTurn(Level l){
+        Debug.Log("ENEMY BEHAVIOR IS MISSING");
     }
 }

@@ -65,18 +65,22 @@ public class Level : MonoBehaviour
     }
 
     public void clearLevel(){
-        cam.transform.parent = transform;   
         levelLoaded = false;
-        while(transform.childCount > 0){
-            Destroy(transform.GetChild(0));
+        cam.transform.parent = transform.parent;
+
+        foreach (Transform child in transform) {
+            GameObject.Destroy(child.gameObject);
         }
         map = new TileObject[0,0];
+
         Destroy(player.gameObject);
-        while(enemies.Count > 0){
-            Enemy e = enemies[0];
-            enemies.RemoveAt(0);
-            Destroy(e);
+
+        foreach (Enemy e in enemies) {
+            GameObject.Destroy(e.transform.gameObject);
         }
+        enemies = new List<Enemy>();
+
+        Destroy(stairs.gameObject);
     }
 
 
@@ -193,5 +197,41 @@ public class Level : MonoBehaviour
             stairs.posY = (int)Random.Range(size*0.1f,size*0.9f);
         }while(stairs.posX < 0 || stairs.posY < 0 || stairs.posX >= size || stairs.posY >= size || !map[stairs.posX,stairs.posY].isWalkable() || map[stairs.posX,stairs.posY].distanceTo(player.positionX,player.positionY) < 5);
         stairs.transform.position = map[stairs.posX,stairs.posY].tile.transform.position;
+    }
+
+
+
+
+    public int distance(int x1, int y1, int x2, int y2){ //distance of hexfields, 1 is source 2 is target
+        int dx = Mathf.Abs(x1 - x2);
+        int dy = Mathf.Abs(y1 - y2);
+
+        if(dx == 0){ return dy; }
+        else if(dy == 0){ return dx; }
+        else{
+            if(x2 < x1 && y2 < y1){ //Small Corner
+                return dx+dy;
+            }else if(x2 < x1 && y2 > y1){ //Big Corner
+                return Mathf.Max(dx, dy);
+            }else if(x2 > x1 && y2 < y1){ //Big Corner
+                return Mathf.Max(dx, dy);
+            }else if(x2 > x1 && y2 > y1){ //Small Corner
+                return dx+dy;
+            }else return 0;
+        }
+
+    }
+
+
+    public bool isUnoccupied(int x, int y){
+        foreach(Enemy e in enemies){
+            if(e.positionX == x && e.positionY == y){
+                return false;
+            }
+        }
+        if(player.positionX == x && player.positionY == y){
+            return false;
+        }
+        return true;
     }
 }

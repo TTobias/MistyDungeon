@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Game : MonoBehaviour
     public GamePhase gamePhase;
     public GameObject storyOverlay;
     public GameObject levelupOverlay;
+    public GameObject gameOverOverlay;
 
     [Header("Technical")]
     public float borderWidth = 0.1f;
@@ -70,7 +72,7 @@ public class Game : MonoBehaviour
                     gamePhase = GamePhase.ENEMY;
 
                 }else if(gamePhase == GamePhase.ENEMY){
-                    handleEnemies();
+                    StartCoroutine(handleEnemies());
                     gamePhase = GamePhase.PLAYER1;
                 }
 
@@ -113,10 +115,22 @@ public class Game : MonoBehaviour
 
 
 
-    public void handleEnemies(){
+    public IEnumerator handleEnemies(){
+        onCooldown = true;
         for(int i = 0; i<level.enemies.Count; i++){
+            
             //do enemy behavior
+            level.enemies[i].doTurn(level);
         }
+            
+        yield return new WaitForSeconds(0.25f);
+
+        //check if player died
+        if(!level.player.alive){
+            initiateGameOver();
+            ////ALSO UPDATE ARMOR INDICATOR
+        }
+        onCooldown = false;
     }
 
 
@@ -127,31 +141,63 @@ public class Game : MonoBehaviour
 
     public IEnumerator PlayerMove(int n){
         //make move
+        int prevX = level.player.positionX, prevY = level.player.positionY;
         onCooldown = true;
+
         int steps = 10;
         Vector3 step = level.map[level.xSelect,level.ySelect].tile.transform.position - level.player.transform.position;
         step.z = 0f;
         for(int i = 0; i< steps ; i++){
             level.player.transform.position += step * (1f / (float)steps);
-
             yield return new WaitForSeconds(0.5f/(float)steps);
         }
         level.player.positionX = level.xSelect;
         level.player.positionY = level.ySelect;
+
+        //do kill
+        if(level.player.hasDagger()){//use dagger
+            level.cam.transform.parent = transform.parent;
+            for(int i = 0; i<level.enemies.Count; i++){
+                if( level.distance(prevX,prevY,level.enemies[i].positionX, level.enemies[i].positionY) == 1 
+                    && level.distance(level.player.positionX, level.player.positionY, level.enemies[i].positionX, level.enemies[i].positionY) == 1 ){
+                    
+
+                    steps = 4;
+                    step = level.enemies[i].transform.position - level.player.transform.position;
+                    step.z = 0f;
+                    for(int j = 0; j< steps ; j++){
+                        level.player.transform.position += step * (1f / (float)steps);
+                        yield return new WaitForSeconds(0.2f/(float)steps);
+                    }
+                    Enemy e = level.enemies[i];
+                    level.enemies.Remove(e);
+                    Destroy(e.gameObject);
+                    
+                    step = -step;
+                    for(int j = 0; j< steps ; j++){
+                        level.player.transform.position += step * (1f / (float)steps);
+                        yield return new WaitForSeconds(0.2f/(float)steps);
+                    }
+
+
+                }
+            }
+            level.cam.transform.parent = level.player.transform;
+        }
+
+        //fix playerposition
         level.fixPlayerPosition();
         level.updateTiles();
         level.resetCameraPosition(n);
 
-        //do kill
-
-
 
         onCooldown = false;
+        gamePhase = GamePhase.PLAYER2;
+
         //Check if Level is finished
         if(level.player.positionX == level.stairs.posX && level.player.positionY == level.stairs.posY){
             startLevelup();
         }
-        gamePhase = GamePhase.PLAYER2;
     }
 
 
@@ -160,6 +206,7 @@ public class Game : MonoBehaviour
 
         storyOverlay.SetActive(false);
         levelupOverlay.SetActive(true);
+        gameOverOverlay.SetActive(false);
 
         level.clearLevel();
 
@@ -188,6 +235,7 @@ public class Game : MonoBehaviour
 
         storyOverlay.SetActive(false);
         levelupOverlay.SetActive(false);
+        gameOverOverlay.SetActive(false);
 
         if(playerAmount == 1){
             
@@ -202,6 +250,7 @@ public class Game : MonoBehaviour
 
         storyOverlay.SetActive(true);
         levelupOverlay.SetActive(false);
+        gameOverOverlay.SetActive(false);
 
 
     }
@@ -217,4 +266,23 @@ public class Game : MonoBehaviour
     public void upgrade1P2(){ selectUpgrade(2,0); }
     public void upgrade2P2(){ selectUpgrade(2,1); }
     public void upgrade3P2(){ selectUpgrade(2,2); }
+
+
+    public void initiateGameOver(){
+        Debug.Log("Game Over");
+        level.clearLevel();
+        gameOverOverlay.SetActive(true);
+        storyOverlay.SetActive(false);
+        levelupOverlay.SetActive(false);
+    }
+
+
+
+    public void backToMenuBtn(){
+        //SceneManagement.Load()
+    }
+
+    public void restartBtn(){
+        
+    }
 }

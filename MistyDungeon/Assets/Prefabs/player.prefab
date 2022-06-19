@@ -97,5 +97,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionX: 0
   positionY: 0
+  playerNumber: 1
+  alive: 1
+  armor: 0
+  arcaneArmor: 0
+  viewRange: 10
+  extViewRange: 2
+  items:
+  - dagger
+  - 
+  - vision
   level: {fileID: 0}
   playerOffset: {x: 0.05, y: 0.05, z: 0}
