@@ -76,8 +76,8 @@ public static class Translation
         new string[][] {
             //depth 0 (Tutorial)
             new string[] {
-                "Tutorial: Bewege dich durch den Nebel und suche den Ausgang: Dagger: Wenn du neben einem Gegner stehst und dich auf ein Pfeld neben dem Gegner bewegst tötest du diesen. Speer: Wenn du dich auf einen Gegner zu bewegst, tötest du diesen. Sichtfähigkeit: Erhöht für einen Zug deine Sichtweite Teleport: Teleportiert dich an einen Ort in Range ManaShield: Beschützt dich vor Schaden",
-                "Tutorial: Bewege dich durch den Nebel und suche den Ausgang: Dagger: Wenn du neben einem Gegner stehst und dich auf ein Pfeld neben dem Gegner bewegst tötest du diesen. Speer: Wenn du dich auf einen Gegner zu bewegst, tötest du diesen. Sichtfähigkeit: Erhöht für einen Zug deine Sichtweite Teleport: Teleportiert dich an einen Ort in Range ManaShield: Beschützt dich vor Schaden"
+                "Tutorial: Bewege dich durch den Nebel und suche den Ausgang: Dagger: Wenn du neben einem Gegner stehst und dich auf ein Feld neben dem Gegner bewegst tötest du diesen. Speer: Wenn du dich auf einen Gegner zu bewegst, tötest du diesen. Sichtfähigkeit: Erhöht für einen Zug deine Sichtweite Teleport: Teleportiert dich an einen Ort in Range ManaShield: Beschützt dich vor Schaden",
+                "Tutorial: Bewege dich durch den Nebel und suche den Ausgang: Dagger: Wenn du neben einem Gegner stehst und dich auf ein Feld neben dem Gegner bewegst tötest du diesen. Speer: Wenn du dich auf einen Gegner zu bewegst, tötest du diesen. Sichtfähigkeit: Erhöht für einen Zug deine Sichtweite Teleport: Teleportiert dich an einen Ort in Range ManaShield: Beschützt dich vor Schaden"
             },
             //depth 1 (intro)
             new string[] {
