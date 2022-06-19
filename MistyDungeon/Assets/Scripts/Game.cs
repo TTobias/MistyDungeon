@@ -205,7 +205,7 @@ public class Game : MonoBehaviour
 
     public void startLevelup(){
         phase = Phase.LEVELUP;
-
+        
         storyOverlay.SetActive(false);
         levelupOverlay.SetActive(true);
         gameOverOverlay.SetActive(false);

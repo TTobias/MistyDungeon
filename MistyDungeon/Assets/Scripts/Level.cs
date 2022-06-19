@@ -9,6 +9,7 @@ public class Level : MonoBehaviour
     public Player player;
     public List<Enemy> enemies = new List<Enemy>();
     public Stairs stairs;
+    public List<Spell> spells = new List<Spell>();
 
     [Header("Generator")]
     public int depthLevel = 0;

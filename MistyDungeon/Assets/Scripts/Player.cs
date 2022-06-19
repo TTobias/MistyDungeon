@@ -17,10 +17,13 @@ public class Player : MonoBehaviour
     public int extViewRange = 2;
 
     [Header("Items")]
-    public string[] items = {"dagger","","vision"};
+    public string[] items = {"dagger","vision",""};
+    public int itemAmount = 2;
     
     [Header("Reference")]
     public Level level;
+    public Sprite p1Sprite;
+    public Sprite p2Sprite;
 
     [Header("Technical")]
     public Vector3 playerOffset = new Vector3(0.1f,0.1f,0f);
@@ -42,5 +45,12 @@ public class Player : MonoBehaviour
 
     public int armorPoints(){
         return armor;
+    }
+
+    void Start(){
+        if(playerNumber == 2){
+            this.GetComponent<SpriteRenderer>().sprite = p2Sprite;
+            playerOffset = new Vector3(0f, 0f, 0f);
+        }
     }
 }
