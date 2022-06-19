@@ -107,6 +107,20 @@ public static class Translation
     };
 
     //MENU TEXT
+    public static string[][] menuText = {
+        //english
+        new string[]{
+            new string[] {
+                "Start Game",
+                "Start Coop Game"
+            }
+
+        },
+        //deutsch
+        new string[] {
+
+        }
+    };
 
     //OPTIONS TEXT
 
