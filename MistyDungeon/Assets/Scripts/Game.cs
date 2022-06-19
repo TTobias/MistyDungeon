@@ -299,8 +299,7 @@ public class Game : MonoBehaviour
 
         //Check if Level is finished
         if(level.player.positionX == level.stairs.posX && level.player.positionY == level.stairs.posY){
-            //startLevelup();
-            startStory();
+            startLevelup();
         }
     }
 
@@ -338,20 +337,21 @@ public class Game : MonoBehaviour
 
         //Check if Level is finished
         if(level.player.positionX == level.stairs.posX && level.player.positionY == level.stairs.posY){
-            //startLevelup();
-            startStory();
+            startLevelup();
         }
     }
 
 
     public void startLevelup(){
         phase = Phase.LEVELUP;
+        level.clearLevel();
+
+        /*
 
         storyOverlay.SetActive(false);
         levelupOverlay.SetActive(true);
         gameOverOverlay.SetActive(false);
 
-        level.clearLevel();
 
         if(playerAmount == 1){
             List<Skill> opt = skilltree.findOptions(level.player);
@@ -365,13 +365,16 @@ public class Game : MonoBehaviour
 
         }else{
             //COOP
-        }
+        }*/
+
+        startStory();
     }
 
     
     public void startLevel(){
         phase = Phase.GAME;
         gamePhase = GamePhase.PLAYER1;
+
 
         level.depthLevel += 1;
         level.generateLevel();

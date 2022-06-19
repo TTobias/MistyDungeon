@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
 
     public void teleportUsed(){
         abilityCooldown[1] = abilityCooldownMax[1];
+        abilitySelected = 0;
     }
 
 
