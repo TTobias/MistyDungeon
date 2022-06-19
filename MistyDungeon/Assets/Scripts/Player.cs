@@ -8,29 +8,49 @@ public class Player : MonoBehaviour
     public int positionX;
     public int positionY;
     public int playerNumber = 1;
+    public bool alive = true;
+    public int armor = 0;
+    public int arcaneArmor = 0; //if >0, hits the armor can take
 
     [Header("Ability")]
     public int viewRange = 1;
     public int extViewRange = 2;
 
     [Header("Items")]
-    public string slot1 = "Dagger"; //Placeholder
+    public string[] items = {"dagger","vision",""};
+    public int itemAmount = 2;
     
     [Header("Reference")]
     public Level level;
+    public Sprite p1Sprite;
+    public Sprite p2Sprite;
 
     [Header("Technical")]
     public Vector3 playerOffset = new Vector3(0.1f,0.1f,0f);
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    
+    public bool has(string s){
+        return items[0] == s || items[1] == s || items[2] == s;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+    public void takeDamage(){
+        if(armor > 0){
+            armor--;
+        }else{
+            alive = false;
+        }
+    }
+
+
+    public int armorPoints(){
+        return armor;
+    }
+
+    void Start(){
+        if(playerNumber == 2){
+            this.GetComponent<SpriteRenderer>().sprite = p2Sprite;
+            playerOffset = new Vector3(0f, 0f, 0f);
+        }
     }
 }

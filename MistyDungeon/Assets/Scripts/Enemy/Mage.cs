@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skeleton : Enemy
+public class Mage : Enemy
 {
-    public Skeleton(int x, int y) : base(x, y){
+    public Sprite mainSprite;
+    public Sprite reloadSprite;
+
+
+    public Mage(int x, int y) : base(x, y){
         
     }
 

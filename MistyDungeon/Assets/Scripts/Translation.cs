@@ -12,7 +12,7 @@ public static class Translation
     public static int ENG = 0, GER = 1;
 
 
-    public static string[][][] cutscenetext = {
+    public static string[][][] cutsceneText = {
         //english
         new string[][] {
             //depth 0 (intro)
@@ -62,11 +62,55 @@ public static class Translation
         }
     };
 
+    //UPGRADE TEXT
+    public static string[][][] upgradeText = {
+        //english
+        new string[][] {
+            new string[] { //0
+                "Armor",
+                "A piece of Armor that protects you from 1 Hit."
+            },
+            new string[] { //1
+                "Extended View I",
+                "Increases your extened view range by 1."
+            },
+            new string[] { //2
+                "Extended View II",
+                "Increases your extened view range by 1."
+            },
+            new string[] { //3
+                "Extended View III",
+                "Increases your extened view range by 1."
+            },
+            new string[] { //4
+                "Extended View IV",
+                "Increases your extened view range by 1."
+            },
+            new string[] { //5
+                "View I",
+                "Increases your clear view range by 1."
+            },
+            new string[] { //6
+                "View II",
+                "Increases your clear view range by 1."
+            },
+            new string[] { //7
+                "View III",
+                "Increases your clear view range by 1."
+            }
+
+        },
+        //deutsch
+        new string[][] {
+
+        }
+    };
+
     //MENU TEXT
 
     //OPTIONS TEXT
 
-    //DESCRIPTION TEXT
+    //ITEM DESCRIPTION TEXT
 
     //ACHIEVEMENTS
 }

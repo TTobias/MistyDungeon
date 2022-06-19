@@ -45,16 +45,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   enemies: []
-  depthLevel: 1
+  stairs: {fileID: 0}
+  depthLevel: 0
   difficulty: 1
   enemyAmount: 5
   size: 20
   tileHeight: 1.2
   tileWidth: 1
   tilePrefab: {fileID: 8916099673760446246, guid: 78c5f61025cac98408e39c622a2b97e6, type: 3}
+  fogPrefab: {fileID: 7122083516521571655, guid: cb991be545b24204f9da0ebe77aa6ef0, type: 3}
   playerPrefab: {fileID: 8310925370877531498, guid: 6309377779d872f44a3305724a55e3a4, type: 3}
   skeletonPrefab: {fileID: 2040488592122874144, guid: 4dc3ce9a2fd9c9b4181bbeeb6c26d902, type: 3}
+  stairPrefab: {fileID: 6241469273300931504, guid: 443ff83e7b73f33499d334d148f593ec, type: 3}
+  levelLoaded: 0
   CameraOffset: {x: 0, y: 0, z: -10}
   cameraPosX: 0
   cameraPosY: 0
   cam: {fileID: 0}
+  xSelect: 0
+  ySelect: 0
